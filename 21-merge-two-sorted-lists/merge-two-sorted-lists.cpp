@@ -11,55 +11,29 @@
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        ListNode *head = 0, *temp = 0;
-        while (list1 != 0 || list2 != 0) {
-            if (list1 != 0 && list2 != 0) {
-                if (list1->val <= list2->val) {
-                    ListNode* newnode = new ListNode(list1->val);
-                    list1 = list1->next;
-                    if (head == 0) {
-                        head = newnode;
-                        temp = newnode;
-                    } else {
-                        temp->next = newnode;
-                        temp = newnode;
-                    }
-                } else {
-                    ListNode* newnode = new ListNode(list2->val);
-                    list2 = list2->next;
-                    if (head == 0) {
-                        head = newnode;
-                        temp = newnode;
-                    } else {
-                        temp->next = newnode;
-                        temp = newnode;
-                    }
-                }
+
+        // Space complexity O(1)
+        ListNode dummy(0);
+        ListNode* temp = &dummy;
+
+        while (list1 != nullptr && list2 != nullptr) {
+
+            if (list1->val <= list2->val) {
+                temp->next = list1;
+                list1 = list1->next;
+            } else {
+                temp->next = list2;
+                list2 = list2->next;
             }
 
-            else if (list1 != 0) {
-                ListNode* newnode = new ListNode(list1->val);
-                list1 = list1->next;
-                if (head == 0) {
-                    head = newnode;
-                    temp = newnode;
-                } else {
-                    temp->next = newnode;
-                    temp = newnode;
-                }
-            } else if (list2 != 0) {
-                ListNode* newnode = new ListNode(list2->val);
-                list2 = list2->next;
-                if (head == 0) {
-                    head = newnode;
-                    temp = newnode;
-                } else {
-                    temp->next = newnode;
-                    temp = newnode;
-                }
-            }
+            temp = temp->next;
         }
 
-        return head;
+        if (list1 != nullptr)
+            temp->next = list1;
+        else
+            temp->next = list2;
+
+        return dummy.next;
     }
 };
